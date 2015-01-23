@@ -1,0 +1,2 @@
+Ninja sprite sheet from: http://www.36peas.com/storage/ninja-shinobi-sprite-sheet-sample.jpg?__SQUARESPACE_CACHEVERSION=1284414208455
+Puppy from: http://pixabay.com/en/puppy-leash-leashed-jumping-collar-32025/
