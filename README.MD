@@ -1,0 +1,1 @@
+This is a repo for the resources needed for my codepen blog tutorials on canvas programming. You can join us at [The Zen Coder](http://codepen.io/tourn171/zen/).
