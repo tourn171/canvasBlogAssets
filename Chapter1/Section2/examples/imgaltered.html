@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css" type="text/css" />
+    </head>
+</html>
+<body>
+    <div class = "info">
+        
+        <h4>Filtering Photos</h4>
+        Here is the code that makes it work:<br />
+        <p><pre>ocean.onload = function(){
+  ctx.drawImage(ocean, W/2 - 325, H/2 - 250, 640 ,480);
+  
+  var myImg = ctx.getImageData(W/2 - 235, H/2 - 250, 640, 481);
+  
+  for (var i = 0; i < myImg.data.length; i += 4)
+  {
+  myImg.data[i] += 25;
+  myImg.data[i + 1] -= 200;
+  myImg.data[i + 2] -= 200;
+  myImg.data[i + 3] = 255;
+  } 
+  ctx.putImageData(myImg, W/2 - 325, H/2 - 250);
+}
+        </pre></p>
+        <p class = "centered">Go ahead and play with the values and see how it changes. The amount you set will be added or subtracted from the normal value</p>
+        <table valign="middle">
+            <tr>
+                <td>Red Value</td>
+                <td><input type="text" name="rval" id="red"/></td>
+            </tr>
+            
+            <tr>
+                <td>Green Value</td>
+                <td><input type="text" name="gval" id="green"/></td>
+            </tr>
+
+            <tr>
+                <td>Blue Value</td>
+                <td><input type="text" name="bval" id="blue"/></td>
+            </tr>            
+            
+            <tr>
+                <td>Alpha Value</td>
+                <td><input type="text" name="aval" id="alpha"/></td>
+            </tr>            
+        </table>
+        <form>
+
+
+            
+            
+        </form>
+    </div>
+    <canvas id="canvas">No canvas<canvas>
+    <script type="text/javascript" src="script.js"></script>
+</body>
