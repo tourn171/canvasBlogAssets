@@ -3,6 +3,8 @@ var canvas,
     ocean,
     W = window.innerWidth - 560,
     H = window.innerHeight,
+    inv = getId('inv'),
+    bW = getId('bW'),
     red = getId('red'),
     blu = getId('blue'),
     gre = getId('green'),
@@ -12,13 +14,37 @@ var canvas,
     
 // Extending funcionality to image object
     
-Image.prototype.filtered = function(r,g,b,a){
+Image.prototype.filtered = function(r,g,b,a,black,inverted){
     // Draws image object to canvas and filters to 
     // input colors
-    try{        
-        ctx.drawImage(this, 100, 50);
-        var myImg = ctx.getImageData(100, 50, 640, 480);
- 
+    var black = black || false;
+    var inverted = inverted || false;
+    ctx.drawImage(this, 100, 50);
+    var myImg = ctx.getImageData(100, 50, 640, 480);
+    
+    if(black){
+        for (var i = 0; i < myImg.data.length; i += 4){
+            var brightness = 0.34 * myImg.data[i] + 0.5 * myImg.data[i + 1] + 0.16 * myImg.data[i + 2];            
+            myImg.data[i] = brightness;
+            myImg.data[i + 1] = brightness;
+            myImg.data[i + 2] = brightness;
+            myImg.data[i + 3] = 255;
+        } 
+        ctx.putImageData(myImg, 100, 50); 
+    }
+    
+    else if(inverted){
+        for (var i = 0; i < myImg.data.length; i += 4){
+            myImg.data[i] = 255 - myImg.data[i];
+            myImg.data[i + 1] = 255 - myImg.data[i + 1];
+            myImg.data[i + 2] = 255 - myImg.data[i + 2];
+            myImg.data[i + 3] = 255;
+        } 
+
+        ctx.putImageData(myImg, 100, 50);        
+    }
+    
+    else{
         for (var i = 0; i < myImg.data.length; i += 4){
             myImg.data[i] += r;
             myImg.data[i + 1] += g;
@@ -27,9 +53,6 @@ Image.prototype.filtered = function(r,g,b,a){
         } 
 
         ctx.putImageData(myImg, 100, 50);
-    }
-    catch(err){
-        console.log(err);
     }
 }  
 
@@ -54,7 +77,7 @@ function update(e){
     var g = parseInt(gre.value);
     var b = parseInt(blu.value);
     var a = parseInt(alp.value);
-    ocean.filtered(r,g,b,a);
+    ocean.filtered(r,g,b,a,bW.checked,inv.checked);
 }
 
 
@@ -85,6 +108,9 @@ function update(e){
     gre.addEventListener('change', update, false);
     blu.addEventListener('change', update, false);
     alp.addEventListener('change', update, false);
+    bW.addEventListener('click', update, false);
+    inv.addEventListener('click', update, false);
+    
     
 
     
@@ -92,7 +118,7 @@ function update(e){
     // once loaded filter the image.
     ocean = new Image(),
     ocean.src = "../images/ocean.jpg";    
-    ocean.onload = ocean.filtered(r, g, b, a);
+    ocean.onload = ocean.filtered(r, g, b, a, bW.checked, inv.checked);
 
     
 })();
