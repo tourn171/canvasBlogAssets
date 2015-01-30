@@ -1,6 +1,6 @@
 var canvas,
     ctx,
-    ocean = new Image(),
+    ocean,
     W = window.innerWidth - 560,
     H = window.innerHeight,
     red = getId('red'),
@@ -60,6 +60,8 @@ function update(e){
 
 (function init(){
     
+
+    
     // Initialize canvas and set attributes
     canvas = getId('canvas');
     ctx = canvas.getContext('2d');
@@ -88,8 +90,10 @@ function update(e){
     
     // Initialize our image set the source
     // once loaded filter the image.
+    ocean = new Image(),
+    ocean.src = "../images/ocean.jpg";    
     ocean.onload = ocean.filtered(r, g, b, a);
-    ocean.src = "../images/ocean.jpg";
+
     
 })();
 
