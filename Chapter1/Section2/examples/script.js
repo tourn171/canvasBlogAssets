@@ -1,6 +1,5 @@
 var canvas,
     ctx,
-    ocean = new Image(),
     W = window.innerWidth - 560,
     H = window.innerHeight,
     red = getId('red'),
@@ -8,7 +7,7 @@ var canvas,
     gre = getId('green'),
     alp = getId('alpha');
     
-    ocean.src = "../images/ocean.jpg";
+
     
 // Extending funcionality to image object
     
