@@ -1,5 +1,5 @@
 // Initialize the canvas
-var canvas = document.getElementById('canvas') 
+var canvas = getId('canvas');
 
 // Get the context
 var ctx = canvas.getContext('2d') 
@@ -25,58 +25,69 @@ function getId(id){
     return document.getElementById(id);
 }
 
-var red = getId('red').value = 25;
-var blu = getId('blue').value = -200;
-var gre = getId('green').value = -200;
-var alp = getId('alpha').value = 0;
+var red = getId('red');
+var blu = getId('blue');
+var gre = getId('green');
+var alp = getId('alpha');
 
+setValue(red,25);
+setValue(blu,-200);
+setValue(gre, -200);
+setValue(alp, 0);
 
+function setValue(obj, amount){
+    obj.value = amount;
+}
 
-function update(which){
-    switch (which) {
-        case 'r':
+function update(e){
+    switch (e.target.id) {
+        case 'red':
             red = getId('red').value;
             drawMe(ocean);
             break;
-        case 'g':
+        case 'green':
             gre = getId('green').value;
             drawMe(ocean);    
             break;
-        case 'b':
+        case 'blue':
             blu = getId('blue').value;
             drawMe(ocean);
             break;
-        case 'a':
+        case 'alpha':
             alp = getId('alpha').value;
             drawMe(ocean);            // code
             break;
         
         default:
-            // code
+            console.log("error");
     }
 }
 
-getId('red').addEventListener('change', update('r'));
-getId('green').addEventListener('change', update('g'));
-getId('blue').addEventListener('change', update('b'));
-getId('alpha').addEventListener('change', update('a'));
+red.addEventListener('change', update);
+gre.addEventListener('change', update);
+blu.addEventListener('change', update);
+alp.addEventListener('change', update);
 
 
 
 function drawMe(imgObj){
+try{        
   ctx.drawImage(imgObj, 100, 50);
-  
   var myImg = ctx.getImageData(100, 50, 640, 480);
   
   for (var i = 0; i < myImg.data.length; i += 4)
   {
-  myImg.data[i] += red;
-  myImg.data[i + 1] += blu;
-  myImg.data[i + 2] += gre;
-  myImg.data[i + 3] += alp;
+  myImg.data[i] += parseInt(red.value);
+  myImg.data[i + 1] += parseInt(gre.value);
+  myImg.data[i + 2] += parseInt(blu.value);
+  myImg.data[i + 3] += parseInt(alp.value);
   } 
   
   ctx.putImageData(myImg, 100, 50);
+}
+catch(exception){
+    console.log(exception);
+}
 }
 
 
