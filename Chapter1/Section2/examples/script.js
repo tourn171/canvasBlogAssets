@@ -40,6 +40,7 @@ function setValue(obj, amount){
 }
 
 function update(){
+    console.log("update");
     try{        
         ctx.drawImage(ocean, 100, 50);
         var myImg = ctx.getImageData(100, 50, 640, 480);
