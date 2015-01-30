@@ -1,93 +1,96 @@
-// Initialize the canvas
-var canvas = getId('canvas');
+var canvas,
+    ctx,
+    ocean,
+    W = window.innerWidth - 560,
+    H = window.innerHeight,
+    red = getId('red'),
+    blu = getId('blue'),
+    gre = getId('green'),
+    alp = getId('alpha');    
+    
+// Extending funcionality to image object
+    
+Image.prototype.filtered = function(r,g,b,a){
+    // Draws image object to canvas and filters to 
+    // input colors
+    try{        
+        ctx.drawImage(this, 100, 50);
+        var myImg = ctx.getImageData(100, 50, 640, 480);
+ 
+        for (var i = 0; i < myImg.data.length; i += 4){
+            myImg.data[i] += r;
+            myImg.data[i + 1] += g;
+            myImg.data[i + 2] += b;
+            myImg.data[i + 3] += a;
+        } 
 
-// Get the context
-var ctx = canvas.getContext('2d') 
+        ctx.putImageData(myImg, 100, 50);
+    }
+    catch(err){
+        console.log(err);
+    }
+}  
 
-// Get our width and height 
-var W = window.innerWidth - 560; 
-var H = window.innerHeight; 
-
-// Set the canvas to said width and height
-canvas.width = W;
-canvas.height = H;
-
-var ocean = new Image();
-
-ocean.onload = function(){
-    drawMe(this);
-}
-
-ocean.src = "../images/ocean.jpg";
+// Helper Functions
 
 
 function getId(id){
+    // Returns DOM object with id
     return document.getElementById(id);
 }
 
-var red = getId('red');
-var blu = getId('blue');
-var gre = getId('green');
-var alp = getId('alpha');
-
-setValue(red,25);
-setValue(blu,-200);
-setValue(gre, -200);
-setValue(alp, 0);
-
 function setValue(obj, amount){
+    // Sets form values
+    // Used to set values on init
     obj.value = amount;
 }
 
-function update(){
-    console.log("update");
-    try{        
-        ctx.drawImage(ocean, 100, 50);
-        var myImg = ctx.getImageData(100, 50, 640, 480);
-  
-        for (var i = 0; i < myImg.data.length; i += 4)
-        {
-        myImg.data[i] += parseInt(red.value);
-        myImg.data[i + 1] += parseInt(gre.value);
-        myImg.data[i + 2] += parseInt(blu.value);
-        myImg.data[i + 3] += parseInt(alp.value);
-        } 
-  
-        ctx.putImageData(myImg, 100, 50);
-    }
-    catch(err){
-        console.log(err);
-    }
-}
-
-red.addEventListener('change', update);
-gre.addEventListener('change', update);
-blu.addEventListener('change', update);
-alp.addEventListener('change', update);
-
-
-
-function drawMe(imgObj){
-    try{        
-        ctx.drawImage(imgObj, 100, 50);
-        var myImg = ctx.getImageData(100, 50, 640, 480);
-  
-        for (var i = 0; i < myImg.data.length; i += 4)
-        {
-        myImg.data[i] += parseInt(red.value);
-        myImg.data[i + 1] += parseInt(gre.value);
-        myImg.data[i + 2] += parseInt(blu.value);
-        myImg.data[i + 3] += parseInt(alp.value);
-        } 
-  
-        ctx.putImageData(myImg, 100, 50);
-    }
-    catch(err){
-        console.log(err);
-    }
+function update(e){
+    // eventHandler for input 
+    e.preventDefault;
+    var r = parseInt(red.value);
+    var g = parseInt(gre.value);
+    var b = parseInt(blu.value);
+    var a = parseInt(alp.value);
+    ocean.filtered(r,g,b,a);
 }
 
 
+(function init(){
+    
+    // Initialize canvas and set attributes
+    canvas = getId('canvas');
+    ctx = canvas.getContext('2d');
+    canvas.width = W;
+    canvas.height = H;
+    
+    // Initialize color values
+    var r = 25;
+    var g = -200;
+    var b = -200;
+    var a = 0;
+    
+    
+    // initialize form data setting default
+    // values and adding event listeners
+    setValue(red, r);
+    setValue(blu, g);
+    setValue(gre, b);
+    setValue(alp, a);
+    red.addEventListener('change', update, false);
+    gre.addEventListener('change', update, false);
+    blu.addEventListener('change', update, false);
+    alp.addEventListener('change', update, false);
+    
+
+    
+    // Initialize our image set the source
+    // once loaded filter the image.
+    ocean = new Image();
+    ocean.src = "../images/ocean.jpg";
+    ocean.onload = ocean.filtered(r, g, b, a);
+    
+})();
 
 
 
