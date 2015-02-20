@@ -24,7 +24,7 @@ Image.prototype.filtered = function(r,g,b,a,black,inverted){
     
     if(black){
         for (var i = 0; i < myImg.data.length; i += 4){
-            var brightness = 0.34 * myImg.data[i] + 0.5 * myImg.data[i + 1] + 0.16 * myImg.data[i + 2];            
+    	var brightness = 0.2126 * myImg.data[i] + 0.7152 * myImg.data[i + 1] + 0.0722 * myImg.data[i + 2];
             myImg.data[i] = brightness;
             myImg.data[i + 1] = brightness;
             myImg.data[i + 2] = brightness;
