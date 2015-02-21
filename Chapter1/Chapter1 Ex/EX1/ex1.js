@@ -11,6 +11,9 @@ canvas.canvas.height = H;
 canvas.fillStyle = "black";
 canvas.fillRect(0,0,W,H);
 
+
+canvas.save();
+canvas.translate(W/2 - 200, H/2);
 canvas.fillStyle = "red";
 
 canvas.fillRect(5,5,50,50);
