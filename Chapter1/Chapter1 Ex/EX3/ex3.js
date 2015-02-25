@@ -58,12 +58,14 @@ canvas.clip();
 
 var img2 = new Image();
 
-img2.src = "../images/postasset/Point-of-ayre-small-lighthouse.jpg";
-
 var offsetx = img2.width / 2;
 var offsety = img2.height / 2;
 
 img2.onload = function(){
     canvas.drawImage(img2, W/2 - offsetx, H/2 - offsety);
 };
+
+img2.src = "../images/postasset/Point-of-ayre-small-lighthouse.jpg";
+
+
 
